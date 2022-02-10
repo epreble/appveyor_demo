@@ -2,7 +2,7 @@ version: 1.0.{build}
 build: off
 
 environment:
-  CONDA_ENV_NAME: conda-pack-build
+  CONDA_ENV_NAME: dedupeio
   APPVEYOR_CACHE_ENTRY_ZIP_ARGS: -t7z -m0=lzma -mx=5
 
 install:

@@ -1,4 +1,4 @@
-name: conda-pack-build
+name: dedupeio
 channels:
   - conda-forge
   - defaults
