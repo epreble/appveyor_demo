@@ -2,7 +2,7 @@ version: 1.0.{build}
 build: off
 
 environment:
-  CONDA_ENV_NAME: gender
+  CONDA_ENV_NAME: dedupeio
   APPVEYOR_CACHE_ENTRY_ZIP_ARGS: -t7z -m0=lzma -mx=5
 
 install:
@@ -16,7 +16,7 @@ build_script:
   - conda config --set always_yes yes --set changeps1 no
   - mamba update -q conda
   - mamba install -c conda-forge conda-pack
-  - conda env create -f environment_gender.yml
+  - conda env create -f environment_dedupeio.yml
   - conda list -n %CONDA_ENV_NAME% > package-list.txt
   - >-
     conda pack --n-threads -1
