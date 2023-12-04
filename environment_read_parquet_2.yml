@@ -1,0 +1,10 @@
+name: read_parquet
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pandas
+  - numpy
+  - pyarrow
+  - notebook
+  - conda-pack
