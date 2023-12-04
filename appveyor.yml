@@ -6,7 +6,7 @@ environment:
   APPVEYOR_CACHE_ENTRY_ZIP_ARGS: -t7z -m0=lzma -mx=5
 
 install:
-  - set PATH=C:\Miniconda39-x64;C:\Miniconda39-x64\Scripts;C:\Miniconda39-x64\Library\bin;%PATH%
+  - set PATH=C:\Miniconda38-x64;C:\Miniconda38-x64\Scripts;C:\Miniconda38-x64\Library\bin;%PATH%
   - ps: Start-FileDownload 'https://github.com/mcmilk/7-Zip-zstd/releases/download/19.00-v1.4.8-R1/Codecs.7z'
   - 7z x Codecs.7z -o"C:\Program Files\7-Zip\Codecs"
   - conda install -c conda-forge mamba==1.5.2 -y --freeze-installed
