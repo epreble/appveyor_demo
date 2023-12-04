@@ -7,4 +7,4 @@ dependencies:
   - numpy
   - pyarrow
   - notebook
-  - conda-pack
+  # - conda-pack
