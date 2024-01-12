@@ -2,34 +2,56 @@ version: 1.0.{build}
 build: off
 
 environment:
-  CONDA_ENV_NAME: read_parquet
-  APPVEYOR_CACHE_ENTRY_ZIP_ARGS: -t7z -m0=lzma -mx=5
+  matrix:
+    - PYTHON: "C:\\Python312"
 
 install:
-  - set PATH=C:\Miniconda38-x64;C:\Miniconda38-x64\Scripts;C:\Miniconda38-x64\Library\bin;%PATH%
-  - ps: Start-FileDownload 'https://github.com/mcmilk/7-Zip-zstd/releases/download/19.00-v1.4.8-R1/Codecs.7z'
-  - 7z x Codecs.7z -o"C:\Program Files\7-Zip\Codecs"
-  - conda install -c conda-forge mamba==1.5.2 -y --freeze-installed
-  
+  # Install Python 3.12 using Chocolatey
+  - ps: choco install python --version 3.12 -y
+
+  # Add Python to PATH
+  - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+  - python -m pip install --upgrade pip
 
 build_script:
-  - conda config --set always_yes yes --set changeps1 no
-  - mamba update -q conda
-  - mamba install -c conda-forge conda-pack
-  - conda env create -f environment_read_parquet_2.yml
-  - conda list -n %CONDA_ENV_NAME% > package-list.txt
-  - >-
-    conda pack --n-threads -1
-    --exclude "*.pyc" --exclude "*.pyx"
-    --name %CONDA_ENV_NAME%
-    --output %CONDA_ENV_NAME%.tar
-  - >-
-    7z a %CONDA_ENV_NAME%.7z
-    -m0=bcj -m1=zstd -mmt=4
-    -mx12
-    %CONDA_ENV_NAME%.tar
-artifacts:
-  - path: $(CONDA_ENV_NAME).7z
-    name: Packed Environment
-  - path: package-list.txt
-    name: Installed Packages (conda list)
+  # Display Python version
+  - python --version
+
+  # # Your build script or commands go here
+  # # For example:
+  # - python setup.py install
+  # - python run_tests.py
+
+# Old yaml
+# environment:
+#   CONDA_ENV_NAME: read_parquet
+#   APPVEYOR_CACHE_ENTRY_ZIP_ARGS: -t7z -m0=lzma -mx=5
+
+# install:
+#   - set PATH=C:\Miniconda38-x64;C:\Miniconda38-x64\Scripts;C:\Miniconda38-x64\Library\bin;%PATH%
+#   - ps: Start-FileDownload 'https://github.com/mcmilk/7-Zip-zstd/releases/download/19.00-v1.4.8-R1/Codecs.7z'
+#   - 7z x Codecs.7z -o"C:\Program Files\7-Zip\Codecs"
+#   - conda install -c conda-forge mamba==1.5.2 -y --freeze-installed
+  
+
+# build_script:
+#   - conda config --set always_yes yes --set changeps1 no
+#   - mamba update -q conda
+#   - mamba install -c conda-forge conda-pack
+#   - conda env create -f environment_read_parquet_2.yml
+#   - conda list -n %CONDA_ENV_NAME% > package-list.txt
+#   - >-
+#     conda pack --n-threads -1
+#     --exclude "*.pyc" --exclude "*.pyx"
+#     --name %CONDA_ENV_NAME%
+#     --output %CONDA_ENV_NAME%.tar
+#   - >-
+#     7z a %CONDA_ENV_NAME%.7z
+#     -m0=bcj -m1=zstd -mmt=4
+#     -mx12
+#     %CONDA_ENV_NAME%.tar
+# artifacts:
+#   - path: $(CONDA_ENV_NAME).7z
+#     name: Packed Environment
+#   - path: package-list.txt
+#     name: Installed Packages (conda list)
