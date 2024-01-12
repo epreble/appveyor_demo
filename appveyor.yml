@@ -1,26 +1,18 @@
-version: 1.0.{build}
-build: off
-
 environment:
   matrix:
-    - PYTHON: "C:\\Python312"
+    - CONDA_PY: "3.12"
 
 install:
-  # Install Python 3.12 using Chocolatey
-  - ps: choco install python --version 3.12 -y
+  # Install Miniconda
+  - choco install miniconda3 -y
 
-  # Add Python to PATH
-  - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
-  - python -m pip install --upgrade pip
+  # Add Miniconda to PATH
+  - set PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 
-build_script:
-  # Display Python version
-  - python --version
-
-  # # Your build script or commands go here
-  # # For example:
-  # - python setup.py install
-  # - python run_tests.py
+  # Create Conda environment
+  - conda create -n testenv python=%CONDA_PY% --yes
+  - activate testenv
+  
 
 # Old yaml
 # environment:
